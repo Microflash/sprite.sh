@@ -1,24 +1,35 @@
 {
-  "name": "spritesh",
-  "version": "1.2.1",
+  "name": "@microflash/spritely",
+  "version": "1.2.5",
+  "description": "A handy Node.js CLI to generate SVG sprites",
   "preferGlobal": true,
-  "description": "A script to build a SVG sprite from a folder of SVG files (typically icons).",
-  "bin": "bin/spritesh.js",
-  "homepage": "https://github.com/edenspiekermann/sprite.sh",
+  "bin": "bin/spritely.js",
+  "devDependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "commander": "^5.1.0",
+    "fs-extra": "^9.0.1",
+    "svgo": "^1.3.2"
+  },
+  "repository": "https://github.com/Microflash/spritely.git",
+  "author": {
+    "name": "Hugo Giraudel",
+    "email": "h.giraudel@de.edenspiekermann.com",
+    "url": "https://github.com/HugoGiraudel"
+  },
+  "maintainers": [
+    {
+      "name": "Naiyer Asif",
+      "url": "https://github.com/naiyerasif"
+    }
+  ],
+  "license": "MIT",
   "keywords": [
     "svg",
     "sprite",
-    "icons",
+    "generator",
     "script"
   ],
-  "license": "MIT",
-  "author": "Hugo Giraudel <h.giraudel@de.edenspiekermann.com> (www.edenspiekermann.com/people/hugo-giraudel)",
   "files": [
     "bin"
-  ],
-  "dependencies": {
-    "cheerio": "^0.20.0",
-    "commander": "^2.9.0",
-    "fs-promise": "^0.5.0"
-  }
+  ]
 }

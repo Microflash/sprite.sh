@@ -1,107 +1,75 @@
-# spritesh
+# Spritely
 
-A Node.js script to build a SVG sprite from a folder of SVG files (typically icons).
+[![npm (scoped)](https://img.shields.io/npm/v/@microflash/spritely)](https://www.npmjs.com/package/@microflash/spritely)
+[![GitHub last commit](https://img.shields.io/github/last-commit/Microflash/spritely)](https://github.com/Microflash/spritely/commits/main)
+[![License](https://img.shields.io/github/license/Microflash/spritely)](./LICENSE.md)
 
-## Install
+> A handy Node.js CLI to generate SVG sprites
 
+## Installation
+
+```sh
+npm install -g @microflash/spritely
+yarn global add @microflash/spritely
 ```
-npm install spritesh -g
-```
-
-```
-gem install spritesh
-```
-
-*Or you know, you can also just copy [the script](https://raw.githubusercontent.com/edenspiekermann/sprite.sh/master/bin/spritesh.js).*
 
 ## Usage
 
 ```
-Usage: spritesh [options]
-Script to build a SVG sprite from a folder of SVG files.
+Usage: spritely [options]
+
 Options:
-  -h, --help             Shows this help
-  -q, --quiet            Disables informative output
-  -i, --input [dir]      Specifies input dir (current dir by default)
-  -o, --output [file]    Specifies output file ("./sprite.svg" by default)
-  -v, --viewbox [str]    Specifies viewBox attribute (parsed by default)
-  -p, --prefix [str]     Specifies prefix for id attribute (none by default)
+  -i, --input [input]          specify input directory (default: current directory)
+  -o, --output [output]        specify output file (default: "sprites.svg")
+  -v, --viewbox [viewbox]      specify viewBox attribute (detected automatically, if not specified)
+  -p, --prefix [prefix]        specify prefix for id attribute for symbols (default: none)
+  -n, --normalize [normalize]  toggle whitespace normalization (default: true)
+  -q, --quiet                  disable verbose output
+  -h, --help                   display help for command
 ```
 
-## Examples
+### Examples
 
-1. Generate `sprite.svg` from SVG files in current folder (all defaults).
+```sh
+# Generate `sprites.svg` from SVG files in the current directory
+$ spritely
 
-    ```sh
-    spritesh
-    ```
+# Generate `icons.svg` from SVG files in the directory `/mnt/e/assets`
+$ spritely --input /mnt/e/assets/icons --output icons.svg
 
-2. Generate `sprite.svg` from SVG files in `assets/images/icons`.
+# Generate `sprites.svg` from SVG files in the current directory with viewBox `0 0 24 24`
+$ spritely --viewbox "0 0 24 24"
 
-    ```sh
-    spritesh --input assets/images/icons
-    ```
-
-3. Generate `_includes/icons.svg` from SVG files in current folder.
-
-    ```sh
-    spritesh --output _includes/icons.svg
-    ```
-
-4. Generate `sprite.svg` from SVG files in current folder with a view box of `0 0 16 16`.
-
-    ```sh
-    spritesh --viewbox "0 0 16 16"
-    ```
-
-5. Generate `sprite.svg` from SVG files in current folder with `id` attributes prefixed with `i_`.
-
-    ```sh
-    spritesh --prefix i_
-    ```
-
-## SVG Optimisation
-
-spritesh is a teeny tiny Bash script that takes care of SVG files concatenation; it does not perform any SVG optimisation. I recommend you add [svgo](https://github.com/svg/svgo) (or similar tool) to your workflow to have an optimised and efficient SVG sprite.
-
-An example that starts with improving the SVG files, then build a sprite could be:
-
+# Generate `sprites.svg` from SVG files in the current directory with prefix `icon-`
+$ spritely --prefix "icon-"
 ```
-svgo -f assets/images/icons && spritesh -i assets/images/icons
+
+## Optimization
+
+Pair `spritely` with [svgo](https://github.com/svg/svgo) to optimize the SVG files and generate sprites from them. A sample pipeline may look like this:
+
+```sh
+svgo -f /mnt/e/assets/icons && spritely -i /mnt/e/assets/icons
 ```
 
 ## Accessibility
 
-spritesh doesn’t help with SVG icons accessibility in itself. It is the responsibility of the developer (a.k.a *you*) to make sure the original icon files are including the relevant accessibility bits: a `<title>` tag with and `id` attribute.
+`spritely` does not come with any accessibility support out of the box. 
 
-For instance, a `logo.svg` icon could look like this:
+As a developer, ensure that an SVG file contains corresponding `<title>` tag 
 
-```svg
-<svg …>
-  <title id="icon-brand-name">Your company/product name here</title>
-  <!-- SVG content -->
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <title>Airplay icon</title>
+  <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path>
+  <polygon points="12 15 17 21 7 21 12 15"></polygon>
 </svg>
 ```
 
-Which will generate this sprite (where `icon-` is the `--prefix` option):
-
-```svg
-<!-- sprite -->
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-  <symbol id="icon-brand" viewBox="0 0 20 20">
-    <svg …>
-      <title id="icon-brand-name">Your company/product name here</title>
-      <!-- SVG Content -->
-    </svg>
-  </symbol>
-  <!-- Other symbols -->
-</svg>
-```
-
-Later on, when using the sprite through `<svg>`/`<use>`, add an `aria-labelledby` attribute to the `<svg>` element referencing the relevant `<title>` id.
+and the usages of the sprites contain `aria-labelledby` attribute describing the content of the file.
 
 ```html
-<svg class="logo" aria-labelledby="icon-brand-name">
-  <use xlink:href="#icon-brand"></use>
+<svg role="img" class="icon icon-airplay" aria-labelledby="icon-airplay">
+  <use xlink:href="sprites.svg#icon-airplay" href="sprites.svg#icon-airplay" />
 </svg>
 ```

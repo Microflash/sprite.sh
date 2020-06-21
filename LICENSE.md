@@ -1,7 +1,7 @@
+### MIT License
 
-The MIT License (MIT)
-
-Copyright (c) 2016 Edenspiekermann
+Copyright &copy; 2020 &ndash; present Naiyer Asif
+Copyright &copy; 2016 [Edenspiekermann](https://github.com/edenspiekermann)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
