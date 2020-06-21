@@ -19,8 +19,10 @@ yarn global add @microflash/spritely
 Usage: spritely [options]
 
 Options:
+  -V, --version                output the version number
   -i, --input [input]          specify input directory (default: current directory)
   -o, --output [output]        specify output file (default: "sprites.svg")
+  -r, --recursive [recursive]  enable recursive traversal of input directory (default: false)
   -v, --viewbox [viewbox]      specify viewBox attribute (detected automatically, if not specified)
   -p, --prefix [prefix]        specify prefix for id attribute for symbols (default: none)
   -n, --normalize [normalize]  toggle whitespace normalization (default: true)
@@ -42,6 +44,9 @@ $ spritely --viewbox "0 0 24 24"
 
 # Generate `sprites.svg` from SVG files in the current directory with prefix `icon-`
 $ spritely --prefix "icon-"
+
+# Generate `sprites.svg` from SVG files in the directory `/mnt/e/assets` and the directories within it
+$ spritely --input /mnt/e/assets/icons --recursive true
 ```
 
 ## Optimization

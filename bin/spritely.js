@@ -4,10 +4,17 @@ const path = require('path')
 const fs = require('fs-extra')
 const program = require('commander')
 const cheerio = require('cheerio')
+const klaw =  require('klaw')
+
+const pkg = require('../package.json')
+program
+  .name(`spritely ${pkg.version}`)
+  .version(pkg.version)
 
 program
   .option('-i, --input [input]', 'specify input directory (default: current directory)')
   .option('-o, --output [output]', 'specify output file (default: "sprites.svg")')
+  .option('-r, --recursive [recursive]', 'enable recursive traversal of input directory (default: false)')
   .option('-v, --viewbox [viewbox]', 'specify viewBox attribute (detected automatically, if not specified)')
   .option('-p, --prefix [prefix]', 'specify prefix for id attribute for symbols (default: none)')
   .option('-n, --normalize [normalize]', 'toggle whitespace normalization (default: true)')
@@ -16,6 +23,7 @@ program
 
 const SOURCE_FOLDER = program.input || '.'
 const OUTPUT_FILE = program.output || 'sprites.svg'
+const RECURSIVE = program.recursive || false
 const ID_PREFIX = program.prefix || ''
 const VIEWBOX = program.viewbox || null
 const PARSER_OPTIONS = {
@@ -77,7 +85,18 @@ const processFile = file => {
 
 const removeOutputFile = () => fs.remove(OUTPUT_FILE)
 
-const readSourceDirectory = d => fs.readdir(SOURCE_FOLDER)
+const readSourceDirectory = d => {
+  return !RECURSIVE 
+    ? fs.readdir(SOURCE_FOLDER) 
+    : new Promise((resolve, reject) => {
+      const files = []
+
+      klaw(SOURCE_FOLDER)
+        .on('data', ({ path, stats }) => { if (stats.isFile()) files.push(path) })
+        .on('end', () => resolve(files))
+        .on('error', (err, item) => reject(err, item))
+    })
+}
 
 const processFiles = files => {
   const processedFiles = files.filter(filterSvgFile).map(processFile)
