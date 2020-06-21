@@ -1,6 +1,6 @@
 ### MIT License
 
-Copyright &copy; 2020 &ndash; present Naiyer Asif
+Copyright &copy; 2020 &ndash; present Naiyer Asif  
 Copyright &copy; 2016 [Edenspiekermann](https://github.com/edenspiekermann)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
