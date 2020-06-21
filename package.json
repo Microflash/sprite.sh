@@ -1,10 +1,12 @@
 {
   "name": "@microflash/spritely",
-  "version": "1.2.6",
+  "version": "1.2.8",
   "description": "A handy Node.js CLI to generate SVG sprites",
   "preferGlobal": true,
-  "bin": "bin/spritely.js",
-  "devDependencies": {
+  "bin": {
+    "spritely": "./bin/spritely"
+  },
+  "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "commander": "^5.1.0",
     "fs-extra": "^9.0.1",
