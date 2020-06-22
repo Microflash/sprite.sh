@@ -26,6 +26,7 @@ Options:
   -v, --viewbox [viewbox]      specify viewBox attribute (detected automatically, if not specified)
   -p, --prefix [prefix]        specify prefix for id attribute for symbols (default: none)
   -n, --normalize [normalize]  toggle whitespace normalization (default: true)
+  -a, --a11y [a11y]            toggle accessibility mode (default: false)
   -q, --quiet                  disable verbose output
   -h, --help                   display help for command
 ```
@@ -47,6 +48,9 @@ $ spritely --prefix "icon-"
 
 # Generate `sprites.svg` from SVG files in the directory `/mnt/e/assets` and the directories within it
 $ spritely --input /mnt/e/assets/icons --recursive true
+
+# Generate `sprites.svg` from SVG files in the current directory with accessibility mode
+$ spritely --a11y true
 ```
 
 ## Optimization
@@ -59,9 +63,9 @@ svgo -f /mnt/e/assets/icons && spritely -i /mnt/e/assets/icons
 
 ## Accessibility
 
-`spritely` does not come with any accessibility support out of the box. 
+`spritely` comes with a rudimentary accessibility mode (using `--a11y` option) which injects a `<title>` tag in the symbols based on the file name. 
 
-As a developer, ensure that an SVG file contains corresponding `<title>` tag 
+For more control, you can add the `<title>` tag manually in an SVG file.
 
 ```xml
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -71,7 +75,7 @@ As a developer, ensure that an SVG file contains corresponding `<title>` tag
 </svg>
 ```
 
-and the usages of the sprites contain `aria-labelledby` attribute describing the content of the file.
+When using the sprites, add the `aria-labelledby` attribute describing the content of the file.
 
 ```html
 <svg role="img" class="icon icon-airplay" aria-labelledby="icon-airplay">
