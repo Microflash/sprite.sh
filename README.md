@@ -25,7 +25,6 @@ Options:
   -r, --recursive [recursive]  enable recursive traversal of input directory (default: false)
   -v, --viewbox [viewbox]      specify viewBox attribute (detected automatically, if not specified)
   -p, --prefix [prefix]        specify prefix for id attribute for symbols (default: none)
-  -n, --normalize [normalize]  toggle whitespace normalization (default: true)
   -a, --a11y [a11y]            toggle accessibility mode (default: false)
   -q, --quiet                  disable verbose output
   -h, --help                   display help for command
