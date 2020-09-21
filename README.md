@@ -38,18 +38,23 @@ $ spritely
 
 # Generate `icons.svg` from SVG files in the directory `/mnt/e/assets`
 $ spritely --input /mnt/e/assets/icons --output icons.svg
+$ spritely -i /mnt/e/assets/icons -o icons.svg
 
 # Generate `sprites.svg` from SVG files in the current directory with viewBox `0 0 24 24`
 $ spritely --viewbox "0 0 24 24"
+$ spritely -v "0 0 24 24"
 
 # Generate `sprites.svg` from SVG files in the current directory with prefix `icon-`
 $ spritely --prefix "icon-"
+$ spritely -p "icon-"
 
 # Generate `sprites.svg` from SVG files in the directory `/mnt/e/assets` and the directories within it
 $ spritely --input /mnt/e/assets/icons --recursive true
+$ spritely -i /mnt/e/assets/icons -r
 
 # Generate `sprites.svg` from SVG files in the current directory with accessibility mode
 $ spritely --a11y true
+$ spritely -a
 ```
 
 ## Optimization
