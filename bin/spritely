@@ -7,17 +7,15 @@ const cheerio = require('cheerio')
 const klaw =  require('klaw')
 
 const pkg = require('../package.json')
+
 program
   .name(`spritely ${pkg.version}`)
   .version(pkg.version)
-
-program
   .option('-i, --input [input]', 'specify input directory (default: current directory)')
   .option('-o, --output [output]', 'specify output file (default: "sprites.svg")')
   .option('-r, --recursive [recursive]', 'enable recursive traversal of input directory (default: false)')
   .option('-v, --viewbox [viewbox]', 'specify viewBox attribute (detected automatically, if not specified)')
   .option('-p, --prefix [prefix]', 'specify prefix for id attribute for symbols (default: none)')
-  .option('-n, --normalize [normalize]', 'toggle whitespace normalization (default: true)')
   .option('-a, --a11y [a11y]', 'toggle accessibility mode (default: false)')
   .option('-q, --quiet', 'disable verbose output')
   .parse(process.argv)
@@ -28,9 +26,6 @@ const RECURSIVE = program.recursive || false
 const ID_PREFIX = program.prefix || ''
 const VIEWBOX = program.viewbox || null
 const A11Y = program.a11y || false
-const PARSER_OPTIONS = {
-  normalizeWhitespace: program.normalize || true
-}
 const QUIET = program.quiet || false
 
 const log = message => {
@@ -38,7 +33,9 @@ const log = message => {
 }
 
 const getSvgElement = content => {
-  const $ = cheerio.load(content, PARSER_OPTIONS)
+  const $ = cheerio.load(content, {
+    normalizeWhitespace: true
+  })
   return $('svg').first()
 }
 
