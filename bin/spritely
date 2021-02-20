@@ -2,7 +2,7 @@
 
 const path = require('path')
 const fs = require('fs-extra')
-const program = require('commander')
+const { program } = require('commander')
 const cheerio = require('cheerio')
 const klaw =  require('klaw')
 
@@ -20,13 +20,15 @@ program
   .option('-q, --quiet', 'disable verbose output')
   .parse(process.argv)
 
-const SOURCE_FOLDER = program.input || '.'
-const OUTPUT_FILE = program.output || 'sprites.svg'
-const RECURSIVE = program.recursive || false
-const ID_PREFIX = program.prefix || ''
-const VIEWBOX = program.viewbox || null
-const A11Y = program.a11y || false
-const QUIET = program.quiet || false
+const options = program.opts()
+
+const SOURCE_FOLDER = options.input || '.'
+const OUTPUT_FILE = options.output || 'sprites.svg'
+const RECURSIVE = options.recursive || false
+const ID_PREFIX = options.prefix || ''
+const VIEWBOX = options.viewbox || null
+const A11Y = options.a11y || false
+const QUIET = options.quiet || false
 
 const log = message => {
   if (!QUIET) console.log(message)
@@ -111,7 +113,7 @@ const filterSvgFile = file => path.extname(file) === '.svg'
 
 const getSpriteContent = contents => `<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${contents.join('')}</svg>`
 
-const writeOutputFile = content => fs.writeFile(OUTPUT_FILE, content, 'utf8')
+const writeOutputFile = content => fs.outputFile(OUTPUT_FILE, content, 'utf8')
 
 const conclude = () => log(`File "${OUTPUT_FILE}" successfully generated.`)
 
