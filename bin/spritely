@@ -111,7 +111,7 @@ const filterSvgFile = file => path.extname(file) === '.svg'
 
 const getSpriteContent = contents => `<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${contents.join('')}</svg>`
 
-const writeOutputFile = content => fs.writeFile(OUTPUT_FILE, content, 'utf8')
+const writeOutputFile = content => fs.outputFile(OUTPUT_FILE, content, 'utf8')
 
 const conclude = () => log(`File "${OUTPUT_FILE}" successfully generated.`)
 
