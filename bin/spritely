@@ -36,7 +36,8 @@ const log = message => {
 
 const getSvgElement = content => {
   const $ = cheerio.load(content, {
-    normalizeWhitespace: true
+    normalizeWhitespace: true,
+    xmlMode: true
   })
   return $('svg').first()
 }

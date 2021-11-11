@@ -79,10 +79,4 @@ For more control, you can add the `<title>` tag manually in an SVG file.
 </svg>
 ```
 
-When using the sprites, add the `aria-labelledby` attribute describing the content of the file.
-
-```html
-<svg role="img" class="icon icon-airplay" aria-labelledby="icon-airplay">
-  <use xlink:href="sprites.svg#icon-airplay" href="sprites.svg#icon-airplay" />
-</svg>
-```
+For better guidelines on using SVGs accessibly, refer to [Accessible SVGs: Perfect Patterns For Screen Reader Users](https://www.smashingmagazine.com/2021/05/accessible-svg-patterns-comparison/).
